@@ -1,0 +1,22 @@
+version: '3'
+services:
+
+  bracket_nginx:
+    image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    network_mode: host
+    depends_on:
+      - bracket_app
+
+  bracket_app:
+    image: php:fpm
+    ports:
+      - 9000:9000
+    network_mode: host
+    volumes:
+      - ./app:/var/www/html
+      - ./vendor:/var/www/vendor
